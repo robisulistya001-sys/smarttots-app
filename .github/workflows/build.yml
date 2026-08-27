@@ -1,0 +1,25 @@
+name: Build APK
+
+on:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Build with Buildozer
+      uses: kivy/buildozer-action@v1
+      with:
+        filename: buildozer.spec
+
+    - name: Upload APK Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: app-release-unsigned
+        path: bin/*.apk
+
